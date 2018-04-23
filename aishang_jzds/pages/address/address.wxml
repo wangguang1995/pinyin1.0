@@ -1,0 +1,18 @@
+<!--we7/pages/address/address.wxml-->
+<view>
+    <form bindsubmit="formSubmit">
+        <view class='addressName'>
+            <text>收货人</text>
+            <input placeholder='请输入收货人姓名' name='name' bindinput='getName' value='{{name}}' />
+        </view>
+        <view class='addressName'>
+            <text>手机号</text>
+            <input placeholder='请输入收货人手机号' name='phone' bindinput='getPhone' value='{{phone}}' />
+        </view>
+        <view class='addressName'>
+            <input placeholder='详细地址'  name='address' class='bb' value='{{address}}' />
+        </view>
+        <button formType="submit" class='addressBtn'>立即领取</button>
+    </form>
+
+</view>

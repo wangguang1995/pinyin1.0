@@ -1,0 +1,83 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.9.1",
+	"appid": "wx06c9040005f15d75",
+	"projectname": "jiajian1.0.2",
+	"svr": "./",
+	"client": "./",
+	"qcloudRoot": "./server",
+	"miniprogramRoot": "./",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "index",
+					"pathName": "aishang_jzds/pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "answer",
+					"pathName": "aishang_jzds/pages/answer/answer",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "address",
+					"pathName": "aishang_jzds/pages/address/address",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "home",
+					"pathName": "aishang_jzds/pages/home/home",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "transfer",
+					"pathName": "aishang_jzds/pages/transfer/transfer",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "home",
+					"pathName": "aishang_jzds/pages/index/index",
+					"query": "",
+					"scene": "1008"
+				},
+				{
+					"id": -1,
+					"name": "doll",
+					"pathName": "aishang_jzds/pages/doll/doll",
+					"query": ""
+				}
+			]
+		}
+	}
+}

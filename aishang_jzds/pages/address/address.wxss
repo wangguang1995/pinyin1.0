@@ -1,0 +1,36 @@
+/* we7/pages/address/address.wxss */
+
+page {
+    background: #fff;
+    font-size: 30rpx;
+}
+
+.addressName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100rpx;
+    width: 95%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.addressName text {
+    width: 30%;
+}
+
+.addressName input {
+    width: 70%;
+}
+
+.section {
+    width: 70%;
+}
+.bb{
+    width: 100%!important;
+}
+.addressBtn{
+    width: 90%;
+    height: 100rpx;
+    font-size: 40rpx;
+}
