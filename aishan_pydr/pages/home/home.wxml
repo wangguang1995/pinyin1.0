@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<scroll-view>
+    <!--分享  -->
+    <view class="index-zhezhao {{isTrue?'show':'hide'}}" catchtap='indexHide'>
+        <view class='index-share' catchtap='indexShow'>
+            <view class='share-img'>
+                <image src='../../images/home-share.png'></image>
+                <text class='shareTextOne'>获得更多准考证</text>
+                <text class='shareTextTwo'>邀请群好友助理准考准</text>
+            </view>
+           <view class='shareBtoBtn'>
+                <button open-type='share' class='index-share-btn'>
+                    获得准考准
+                </button>
+           </view>
+        </view>  
+    </view>
+    <view class="container">
+        <view class="userinfo">
+            <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+            <text class="userinfo-nickname">考试过关{{Clearance_num}}次</text>
+        </view>
+        <button class='customer' open-type='contact'>
+            <image src='../../images/icon-home-kefu.png'></image>
+            <view class='customerText'>
+                <text>客</text>
+                <text>服</text>
+            </view>
+            
+        </button>
+    </view>
+    <view class='contentInfo'>
+        <view class='contentInfoBox'>
+            <view class='challenge'>
+                <text>
+            <text class='fontSize'>{{surplus_number}}</text> 次
+                </text>
+                <text>挑战机会</text>
+            </view>
+            <view class='challenge'>
+                <text>
+            <text class='fontSize'>{{answer_number}}</text> 次
+                </text>
+                <text>以考试</text>
+            </view>
+            <view class='challenge'>
+                <text>
+            <text class='fontSize'>{{record}}</text> 题
+                </text>
+                <text>最高记录</text>
+            </view>
+        </view>
+        <view class='info-btn'>
+            <button open-type='share'>
+                <image src='../../images/index-icon-logo.png' class='index-logo'></image>
+                炫耀战绩</button>
+            <button bindtap='indexShare'>获得挑战机会</button>
+        </view>
+    </view>
+</scroll-view>

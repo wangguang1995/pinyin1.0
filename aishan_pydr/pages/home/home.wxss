@@ -1,0 +1,220 @@
+/**index.wxss**/
+page{
+    background: #fee7b1;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50rpx 0 30rpx 0;
+    height: 500rpx;
+    box-sizing: border-box;
+    background: #db5a3a;
+}
+
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userinfo-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+
+.userinfo-nickname {
+    color: #fff;
+    font-size: 32rpx;
+}
+
+.contentInfo {
+    position: fixed; 
+    bottom: 35%;
+    left: 50%;
+    margin-left: -45%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 300rpx;
+    width: 90%;
+    background: #cb543e;
+    border-radius: 50rpx;
+    box-shadow: 0rpx 0rpx 30rpx  rgba(0,0,0,0.4);
+}
+.contentInfoBox{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+.customer{
+    position: fixed;
+    right: 5%;
+    top: 15%;
+    display: flex;
+    flex-direction: column;
+    background: none;
+    justify-content: flex-start;
+}
+.customer::after{
+    border: none;
+}
+.customer image{
+    height: 65rpx;
+    width: 75rpx;
+}
+.customerText{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.customer text{
+    font-size: 30rpx;
+    color: #fff5b8;
+    line-height: 30rpx;
+}
+.challenge {
+    width: 200rpx;
+    text-align: center;
+    border-right: 4rpx solid #f8e1a9;
+}
+.challenge:nth-child(3){
+    border: none;
+}
+.challenge text {
+    display: block;
+    color: #f8e1a9;
+    font-size: 30rpx;
+}
+.info-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.info-btn button {
+    height: 80rpx;
+    width: 45%;
+    font-size:30rpx;
+    background: #fff5b8;
+    color: #cb543e;
+    border-radius: 50rpx;
+}
+
+.info-btn button:nth-child(1) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.info-btn button:nth-child(2) {
+    background: #cb543e;
+    border: 1px solid #fff5b8;
+    color: #fff5b8;
+}
+
+.fontSize {
+    display: inline !important;
+    font-size: 60rpx !important;
+}
+
+
+.index-logo {
+    height: 40rpx;
+    width: 50rpx;
+}
+
+/* 挑战更多机会遮罩 */
+
+.index-zhezhao {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 11;
+}
+
+.show { 
+     display: block; 
+}
+
+.hide {
+     display: none; 
+} 
+
+.index-share {
+    width: 90%;
+    height: 550rpx;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -200rpx 0 0 -45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius:30rpx; 
+}
+.share-img{
+    background: #db5a3a;
+    width: 100%;
+    height: 400rpx;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.index-share image {
+    height: 250rpx;
+    width: 70%;
+    
+}
+.shareTextOne{
+    color: #ffd302;
+    font-size: 36rpx;
+}
+.shareTextTwo{
+    color: #fff;
+    font-size: 30rpx;
+}
+.shareBtoBtn{
+    width: 100%;
+    height: 150rpx;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.index-share-btn {
+    width: 40%;
+    height: 80rpx;
+    background: #db5a3a;
+    border-radius:40rpx;
+    color: #fff;
+    font-size: 30rpx; 
+}
+
+.index-share-btn text:nth-child(1) {
+    font-size: 34rpx;
+}
+
+.index-share-btn text:nth-child(2) {
+    font-size: 40rpx;
+}
+
+.index-zhezhao-hide {
+    position: absolute;
+    height: 50rpx !important;
+    width: 50rpx !important;
+    left: 50%;
+    margin-left: -25rpx;
+    bottom: 20%;
+}

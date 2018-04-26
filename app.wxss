@@ -1,0 +1,43 @@
+/* pages/answer/answer.wxss */
+page {
+    height: 100%;
+    background: #000;
+}
+.transfer{
+    height: 100%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.transferTop{
+    height: 20%;
+    width: 100%;
+    background: #db5a3a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    align-items: center;
+    font-size: 30rpx;
+    box-shadow: 0px 10rpx 0px #ad4032;
+}
+.transferTop text{
+    line-height: 60rpx;
+}
+.answerbg {
+    width: 100%;
+    height: 65%;
+    text-align: center;
+    padding-top: 20rpx;
+}
+.transferBot{
+    background: #db5a3a;
+    height: 15%;
+    width: 100%;
+    box-shadow: 0px -10rpx 0px #ad4032;
+}
+.num {
+    font-size: 400rpx;
+    color: #fff;
+}

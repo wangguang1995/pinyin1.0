@@ -1,0 +1,13 @@
+<view class='transfer'>
+    <view class='transferTop'>
+        <text>每次训练消费{{num}}张准考证</text>
+        <text>限时找出正确的拼音</text>
+        <text>答对{{number}}道题即挑战成功</text>
+    </view>
+    <view class='answerbg'>
+        <view animation="{{animationData}}" class='num'>{{num2}}</view>
+    </view>
+    <view class='transferBot'>
+
+    </view>
+</view>

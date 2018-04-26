@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.1",
 	"appid": "wx06c9040005f15d75",
-	"projectname": "jiajian1.0.2",
+	"projectname": "pinyin1.0",
 	"svr": "./",
 	"client": "./",
 	"qcloudRoot": "./server",
@@ -37,8 +37,9 @@
 				{
 					"id": 0,
 					"name": "index",
-					"pathName": "aishang_jzds/pages/index/index",
-					"query": ""
+					"pathName": "aishan_pydr/pages/index/index",
+					"query": "",
+					"scene": "1008"
 				},
 				{
 					"id": -1,
@@ -65,9 +66,9 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "home",
-					"pathName": "aishang_jzds/pages/index/index",
+					"pathName": "aishang_jzds/pages/home/home",
 					"query": "",
 					"scene": "1008"
 				},

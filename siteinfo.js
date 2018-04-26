@@ -1,6 +1,6 @@
 var siteinfo = {
-    "name": 'aishang_jzds',
-    "uniacid": "18",
+    "name": 'aishan_pydr',
+    "uniacid": "24",
     "acid": "18",
     "multiid": "0",
     "version": "1.0.0",
