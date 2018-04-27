@@ -5,7 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        bg: "",
+        // bg: "",
         tabArr: {
             curHdIndex: 0,
             curBdIndex: 0
@@ -17,7 +17,8 @@ Page({
         number: null,//答对多少道题
         share_group: null,//分享一次，获得多少次机会
         share: null,//每天分享群的次数
-        title:""
+        title:"",
+        tiale_2:""
     },
     display: function (e) {
         this.setData({
@@ -43,9 +44,24 @@ Page({
     //答题按钮
     answer: function (e) {
         var openId = wx.getStorageSync('openId');
+        var surplus_number = wx.getStorageSync('surplus_number');
+        console.log(surplus_number);
         if (openId == "" || openId == null) {
             app.getInfo();
-        } else {
+        } else if (surplus_number == 0){
+            wx.showModal({
+                title: '提示',
+                content: "您已经没有挑战机会了",
+                showCancel: false,
+                success: function (res) {
+                    if (res.confirm) {
+                        console.log('用户点击确定')
+                    } else if (res.cancel) {
+                        console.log('用户点击取消')
+                    }
+                }
+            })
+        }else{
             app.util.request({
                 'url': 'entry/wxapp/reduce',
                 data: {
@@ -96,7 +112,7 @@ Page({
             url: 'entry/wxapp/SysInfo',
             'cachetime': '30',
             success: function (res) {
-                
+                console.log(res.data)
                 if (res.data.data.sysInfo.share_number == 0) {
                     _this.setData({
                         share: "每天可以分享不同的群"
@@ -106,21 +122,37 @@ Page({
                         share: "每天可以分享" + res.data.data.sysInfo.share_number + "次群"
                     })
                 }
+                if (res.data.data.sysInfo.share_number == 0) {
+                    _this.setData({
+                        isflag: true
+                    })
+                } else {
+                    _this.setData({
+                        isflag: false
+                    })
+                }
                 _this.setData({
                     rongyu: res.data.data.rongyu,
                     yili: res.data.data.yili,
                     num: res.data.data.sysInfo.challenge_time,
                     title: res.data.data.sysInfo.title,
+                    title_2:res.data.data.sysInfo.title_2,
                     wawa: res.data.data.prize,
-                    bg: res.data.data.sysInfo.bg,
                     number: res.data.data.sysInfo.answer_number,
-                    share_group: res.data.data.sysInfo.share_group
+                    share_group: res.data.data.sysInfo.share_group,
+                    initial_number: res.data.data.sysInfo.initial_number
                 })
                 wx.setStorageSync('wawa', res.data.data.prize);
                 wx.setStorageSync('number', res.data.data.sysInfo.answer_number);
                 wx.setStorageSync('answer_time', res.data.data.sysInfo.answer_time);//开始时间
                 wx.setStorageSync('end_time', res.data.data.sysInfo.end_time);//结束时间
-                wx.setStorageSync('bg', res.data.data.sysInfo.bg);
+                wx.setStorageSync('share_text', res.data.data.sysInfo.share_text);
+                wx.setStorageSync('share_number', res.data.data.sysInfo.share_number);
+                app.globalData.name = res.data.data.sysInfo.name;
+                wx.setNavigationBarTitle({
+                    title: res.data.data.sysInfo.name
+                })
+                
 
             }
         })
@@ -130,107 +162,26 @@ Page({
 
     },
     //分享
-    // onShareAppMessage: function () {
-    //     return {
-    //         title: '加减大师',
-    //         path: '/aishang_jzds/pages/index/index',
-    //         success: function (res) {
-    //             console.log(res);
-    //             console.log(res.shareTickets[0])
-    //             if (res.shareTickets[0]!=""){
-    //                 wx.getShareInfo({
-    //                     shareTicket: res.shareTickets[0],
-    //                     success: function (res) {
-    //                         var openId = wx.getStorageSync('openId');
-    //                         var session3rd = wx.getStorageSync('session3rd');
-    //                         app.util.request({
-    //                             url: 'entry/wxapp/Increase',
-    //                             data: {
-    //                                 openId: openId,
-    //                                 session3rd: session3rd,
-    //                                 iv: res.iv,
-    //                                 encryptedData: res.encryptedData
-    //                             },
-    //                             success: function (res) {
-    //                                 console.log(res);
-    //                                 var surplus_number = wx.getStorageSync('surplus_number');
-    //                                 wx.setStorageSync('surplus_number', (parseInt(surplus_number) + 2));
-    //                                 wx.showModal({
-    //                                     title: '提示',
-    //                                     content: res.data.message,
-    //                                     showCancel:false,
-    //                                     success: function (res) {
-    //                                         if (res.confirm) {
-    //                                             console.log('用户点击确定')
-    //                                         } else if (res.cancel) {
-    //                                             console.log('用户点击取消')
-    //                                         }
-    //                                     }
-    //                                 })   
-
-    //                             },
-    //                             fail: res=>{
-    //                                 wx.showModal({
-    //                                     title: '提示',
-    //                                     content: res.data.message,
-    //                                     showCancel:false,
-    //                                     success: function (res) {
-    //                                         if (res.confirm) {
-    //                                             console.log('用户点击确定')
-    //                                         } else if (res.cancel) {
-    //                                             console.log('用户点击取消')
-    //                                         }
-    //                                     }
-    //                                 })
-
-
-
-    //                             }
-    //                         })
-    //                     },
-    //                     fail: function (res) {
-    //                          console.log(res)
-    //                     }
-    //                 })
-    //             }else{
-    //                 wx.showModal({
-    //                     title: '提示',
-    //                     content: '分享好友无效，请分享群',
-    //                     success: function (res) {
-    //                         if (res.confirm) {
-    //                             console.log('用户点击确定')
-    //                         } else if (res.cancel) {
-    //                             console.log('用户点击取消')
-    //                         }
-    //                     }
-    //                 })
-    //             }
-
-    //         },
-    //         fail: function (res) {
-    //             // 分享失败
-    //             console.log(res)
-    //         }
-    //     }
-    // },
     onShareAppMessage: function (res) {
         let that = this
         return {
-            title: '拼音达人',
-            path: '/pages/index/index',
+            title: '加减大师',
+            path: '/aishang_jzds/pages/index/index',
             success: function (res) {
                 //getSystemInfo是为了获取当前设备信息，判断是android还是ios，如果是android
                 //还需要调用wx.getShareInfo()，只有当成功回调才是转发群，ios就只需判断shareTickets
-
+                //获取用户设备信息
                 wx.getSystemInfo({
                     success: function (d) {
                         console.log(d);
+                        //判断用户手机是IOS还是Android
                         if (d.platform == 'android') {
                             console.log(1)
                             wx.getShareInfo({
                                 shareTicket: res.shareTickets,
                                 success: function (res) {
                                     console.log(res);
+                                    console.log(2);
                                     var openId = wx.getStorageSync('openId');
                                     var session3rd = wx.getStorageSync('session3rd');
                                     app.util.request({
@@ -244,7 +195,7 @@ Page({
                                         success: function (res) {
                                             console.log(res);
                                             var surplus_number = wx.getStorageSync('surplus_number');
-                                            wx.setStorageSync('surplus_number', (parseInt(surplus_number) + 2));
+                                            // wx.setStorageSync('surplus_number', (parseInt(surplus_number) + this.data.share_group));
                                             wx.showModal({
                                                 title: '提示',
                                                 content: res.data.message,
@@ -276,12 +227,55 @@ Page({
                                 }
                             })
                         }
-                        if (d.platform == 'ios' && (res.shareTickets.length > 0)) {
-                            wx.showToast({
-                                title: "ios分享群",
-                                duration: 2000
-                            });
+                        if (d.platform == 'ios') {
+                            if (res.shareTickets != undefined) {
+                                console.log("分享的是群");
+                                console.log(res.shareTickets);
+                                var openId = wx.getStorageSync('openId');
+                                var session3rd = wx.getStorageSync('session3rd');
+                                app.util.request({
+                                    url: 'entry/wxapp/Increase',
+                                    data: {
+                                        openId: openId,
+                                        session3rd: session3rd,
+                                        iv: res.iv,
+                                        encryptedData: res.encryptedData
+                                    },
+                                    success: function (res) {
+                                        console.log(res);
+                                        var surplus_number = wx.getStorageSync('surplus_number');
+                                        // wx.setStorageSync('surplus_number', (parseInt(surplus_number) + 2));
+                                        wx.showModal({
+                                            title: '提示',
+                                            content: res.data.message,
+                                            showCancel: false,
+                                            success: function (res) {
+                                                if (res.confirm) {
+                                                    console.log('用户点击确定')
+                                                } else if (res.cancel) {
+                                                    console.log('用户点击取消')
+                                                }
+                                            }
+                                        })
+
+                                    }
+                                })
+                            } else {
+                                console.log("分享的是个人");
+                                wx.showModal({
+                                    title: '提示',
+                                    content: '分享好友无效，请分享群',
+                                    success: function (res) {
+                                        if (res.confirm) {
+                                            console.log('用户点击确定')
+                                        } else if (res.cancel) {
+                                            console.log('用户点击取消')
+                                        }
+                                    }
+                                })
+                            }
                         }
+
                     },
                     fail: function (res) {
                         wx.showToast({

@@ -43,6 +43,7 @@ App({
                                             wx.setStorageSync('name', res.data.data.userinfo[0].name);
                                             wx.setStorageSync('mobile', res.data.data.userinfo[0].mobile);
                                             wx.setStorageSync('address', res.data.data.userinfo[0].receivingAddress);
+                                            
                                             wx.setStorageSync('canGet', res.data.data.userinfo[0].clearance_number - res.data.data.userinfo[0].prize_number);
                                         }
                                     })
@@ -110,7 +111,8 @@ App({
     globalData: {
         userInfo: null,
         openId: 333,
-        session3rd:null
+        session3rd:null,
+        name: "个人中心"
     },
     siteInfo: require('siteinfo.js')
 });

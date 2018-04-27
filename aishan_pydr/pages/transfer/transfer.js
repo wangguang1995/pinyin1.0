@@ -7,7 +7,7 @@ Page({
         animationData: {},
         num: 3,
         num2: 3,
-        number:25
+        number:0
     },
 
     /**
@@ -39,7 +39,7 @@ Page({
             num--;
 
             if (num < 1) {
-                num = '开始';
+                num = 'GO';
                 clearInterval(timer);
                 var a = setTimeout(function () {
                     wx.redirectTo({
@@ -66,8 +66,12 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        // this.animation();
-        // this.tranfer();
+        var number = wx.getStorageSync('number');
+        this.setData({
+            number:number
+        })
+        this.animation();
+        this.tranfer();
     },
 
     /**

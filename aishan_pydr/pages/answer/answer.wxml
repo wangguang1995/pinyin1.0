@@ -13,10 +13,27 @@
         <view class='rq'>
             <progress percent="{{jindu}}" stroke-width="20" color='#ffeb02' class='progress' />
         </view>
-        <text class='answerColor'>以答对{{}}道题</text>
+        <text class='answerColor'>第{{id}}题</text>
     </view>
-    <view class='answerbg'>
-        <view animation="{{animationData}}" class='num'>{{num2}}</view>
+    <view class='answerBg'>
+        <view class='answerPinyin'>
+            <view class="word {{isJson[num].position=='1'?'active':' '}} ">
+                <image src='../../images/tianzhige.png' class="image {{isJson[num].position=='1'?'imageShow':'imageHide'}}"></image>
+                {{isJson[num].word_1}}
+            </view>
+            <view class="word {{isJson[num].position=='2'?'active':' '}} ">
+            <image src='../../images/tianzhige.png' class="image {{isJson[num].position=='2'?'imageShow':'imageHide'}}"></image>
+                {{isJson[num].word_2}}
+            </view>
+        </view>
+        <view class='answerPinyin'>
+            <view data-text='{{time%2==0?isJson[num].error_py:isJson[num].right_py}}' class='key' bindtap='selectAnswer'>
+                {{time%2==0?isJson[num].error_py:isJson[num].right_py}}
+            </view>
+            <view data-text='{{time%2==1?isJson[num].error_py:isJson[num].right_py}}' class='key' bindtap='selectAnswer'>
+                {{time%2==1?isJson[num].error_py:isJson[num].right_py}}
+            </view>
+        </view>
     </view>
     <view class='transferBot'>
 

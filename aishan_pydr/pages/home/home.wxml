@@ -6,10 +6,10 @@
             <view class='share-img'>
                 <image src='../../images/home-share.png'></image>
                 <text class='shareTextOne'>获得更多准考证</text>
-                <text class='shareTextTwo'>邀请群好友助理准考准</text>
+                <text class='shareTextTwo'>邀请群好友助力准考准</text>
             </view>
            <view class='shareBtoBtn'>
-                <button open-type='share' class='index-share-btn'>
+                <button open-type='share' class="index-share-btn">
                     获得准考准
                 </button>
            </view>
@@ -19,7 +19,7 @@
         <view class="userinfo">
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <text class="userinfo-nickname">考试过关{{Clearance_num}}次</text>
+            <text class="userinfo-nickname">考试过关{{clearance_num}}次</text>
         </view>
         <button class='customer' open-type='contact'>
             <image src='../../images/icon-home-kefu.png'></image>
@@ -53,9 +53,10 @@
         </view>
         <view class='info-btn'>
             <button open-type='share'>
-                <image src='../../images/index-icon-logo.png' class='index-logo'></image>
-                炫耀战绩</button>
-            <button bindtap='indexShare'>获得挑战机会</button>
+                <image src='../../images/index-icon-logo.png' class="index-logo {{isflag?'shareHide':'shareShow'}}"></image>
+                炫耀战绩
+            </button>
+            <button bindtap="indexShare {{isflag?'shareHide':'shareShow'}}">获得挑战机会</button>
         </view>
     </view>
 </scroll-view>

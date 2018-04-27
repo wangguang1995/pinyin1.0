@@ -42,41 +42,46 @@
 					"scene": "1008"
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "answer",
-					"pathName": "aishang_jzds/pages/answer/answer",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "address",
-					"pathName": "aishang_jzds/pages/address/address",
-					"query": ""
-				},
-				{
-					"id": 3,
-					"name": "home",
-					"pathName": "aishang_jzds/pages/home/home",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "transfer",
-					"pathName": "aishang_jzds/pages/transfer/transfer",
-					"query": ""
-				},
-				{
-					"id": 5,
-					"name": "home",
-					"pathName": "aishang_jzds/pages/home/home",
+					"pathName": "aishan_pydr/pages/answer/answer",
 					"query": "",
 					"scene": "1008"
 				},
 				{
-					"id": -1,
+					"id": 2,
+					"name": "address",
+					"pathName": "aishan_pydr/pages/address/address",
+					"query": "",
+					"scene": "1008"
+				},
+				{
+					"id": 3,
+					"name": "home",
+					"pathName": "aishan_pydr/pages/home/home",
+					"query": "",
+					"scene": "1008"
+				},
+				{
+					"id": 4,
+					"name": "transfer",
+					"pathName": "aishan_pydr/pages/transfer/transfer",
+					"query": "",
+					"scene": "1008"
+				},
+				{
+					"id": 5,
+					"name": "home",
+					"pathName": "aishan_pydr/pages/home/home",
+					"query": "",
+					"scene": "1008"
+				},
+				{
+					"id": 6,
 					"name": "doll",
-					"pathName": "aishang_jzds/pages/doll/doll",
-					"query": ""
+					"pathName": "aishan_pydr/pages/doll/doll",
+					"query": "",
+					"scene": "1008"
 				}
 			]
 		}

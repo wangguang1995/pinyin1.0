@@ -14,14 +14,15 @@ Page({
      */
     data: {
         jindu: 100,//进度条
-        value: 1,//当前答到第几题
         now: 50,
-        id:"0",//当前题目写的下标
         startTime:null,//开始持续时间
         endTime:null,//结束持续时间
         isFlag:null,//遮罩显示或隐藏
         answerNumber:null,//一共多少道题
-        bg:''//背景图
+        isJson:[],
+        num:0,
+        time: null,//时间戳
+        id:1
         
     },
 
@@ -65,18 +66,25 @@ Page({
         }, _this.data.now)
     },
     //点击事件
-    answerTrue: function (e) {
-        var startTime = this.data.startTime;
-        var endTime = this.data.endTime;
-        var answerNumber = this.data.answerNumber;
-        var dj_time = bili(startTime, endTime, answerNumber).djTime;
-        console.log(this.data.now)
-        var num = this.data.value;
-        num++;
-        var id = this.data.id;
-        id++;
-
-        if (id == 40) {
+    selectAnswer:function(e){
+        var time = new Date().getTime();
+        this.setData({
+            time: time
+        })
+        var startTime = this.data.startTime;//开始时间
+        var endTime = this.data.endTime;//结束时间
+        var answerNumber = this.data.answerNumber;//答对多少提
+        var dj_time = bili(startTime, endTime, answerNumber).djTime;//每一题递减多少时间
+        var value = e.currentTarget.dataset.text;//当前点击的value值
+        var isJson = this.data.isJson;//数组容器
+        var num = this.data.num;//当前下标
+        var id = this.data.id;//第几题
+        
+        console.log(id);
+        console.log(value + " " + isJson[num].right_py);
+        var number = wx.getStorageSync('number');
+        console.log(num+" "+number);
+        if(id == number){
             clearInterval(timer);
             var openId = wx.getStorageSync('openId');
             app.util.request({
@@ -93,7 +101,7 @@ Page({
                 'url': 'entry/wxapp/record',
                 data: {
                     openId: openId,
-                    record: num - 1
+                    record: id
                 },
                 success(res) {
                     console.log(res);
@@ -114,137 +122,67 @@ Page({
                         })
                     }
                 }
-            })
-            
-        } else {
-            if (this.data.isJson[this.data.id].is_yes == "1") {
+            })    
+        }else{
+            if (value == isJson[num].right_py) {
+                console.log('答对了')
                 clearInterval(timer);
+                num++;
+                id++;
                 this.setData({
-                    value: num++,
-                    id: id,
+                    num: num,
+                    id:id,
                     now: this.data.now - dj_time
                 })
                 this.progress();
-            } else {
-                var openId = wx.getStorageSync('openId');
-                app.util.request({
-                    'url': 'entry/wxapp/record',
-                    data: {
-                        openId: openId,
-                        record: num - 1
-                    },
-                    success(res) {
-                        console.log(res);
-                        wx.setStorageSync('record', res.data.record);
-                    }
-                })
+            }else{
                 clearInterval(timer);
+                console.log('答错了')
+                var openId = wx.getStorageSync('openId');
+                var record = wx.getStorageSync('record');
+                console.log(openId+" "+record)
+                if((id-1) > record){
+                    app.util.request({
+                        'url': 'entry/wxapp/record',
+                        data: {
+                            openId: openId,
+                            record: id-1
+                        },
+                        success(res) {
+                            console.log(res);
+                            wx.setStorageSync('record', res.data.record);
+                        }
+                    })
+                    
+                }
                 this.setData({
                     isFlag: true
                 })
-
-            }
-        
-    }
-        
-        
-    },
-    answerFalse: function (e) {
-        var startTime = this.data.startTime;
-        var endTime = this.data.endTime;
-        var answerNumber = this.data.answerNumber;
-        var di_time = bili(startTime, endTime, answerNumber).djTime ;
-        console.log(this.data.now)
-        var num = this.data.value;
-        num++;
-        var id = this.data.id;
-        id++;
-        if(id==40){
-            clearInterval(timer);
-            wx.showModal({
-                title: '提示',
-                content: '恭喜你，挑战成功',
-                success: function (res) {
-                    if (res.confirm) {
-                        wx.switchTab({
-                            url: '../index/index',
-                        })
-                    } else if (res.cancel) {
-                        wx.switchTab({
-                            url: '../index/index',
-                        })
-                    }
-                }
-            })
-            var openId = wx.getStorageSync('openId');
-            app.util.request({
-                'url': 'entry/wxapp/clearance',
-                data: {
-                    openId: openId
-                },
-                success(res) {
-                    console.log(res);
-
-                }
-            })
-            app.util.request({
-                'url': 'entry/wxapp/record',
-                data: {
-                    openId: openId,
-                    record: num - 1
-                },
-                success(res) {
-                    console.log(res);
-                    wx.setStorageSync('record', res.data.record);
-                }
-            })
-        }else{
-            if (this.data.isJson[this.data.id].is_yes == "0") {
-                clearInterval(timer);
-                this.setData({
-                    id: id,
-                    value: num,
-                    now: this.data.now - di_time
-                })
-                this.progress();
-            } else {
-                var openId = wx.getStorageSync('openId');
-                app.util.request({
-                    'url': 'entry/wxapp/record',
-                    data: {
-                        openId: openId,
-                        record:num-1
-                    },
-                    success(res) {
-                        console.log(res);
-                        wx.setStorageSync('record', res.data.record);
-                    }
-                })
-                clearInterval(timer);
-                this.setData({
-                    isFlag: true
-                })
-                
                 
             }
         }
         
+        
     },
+    
     /**
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        var bg = wx.getStorageSync('bg');
-        console.log(bg)
-        this.setData({
-            bg:bg
-        })
+        
         var _this = this;
         app.util.request({
             'url': 'entry/wxapp/answer',
             'cachetime': '30',
             success(res) {
                 console.log(res);
+                if(res.data.data.question[_this.data.num].position == 1){
+                    _this.setData({
+                        wordIsTrue:true
+                    })
+                }else{
+                    wordIsTrue: false
+                }
                 _this.setData({
                     isJson:res.data.data.question,
                     startTime: res.data.data.sysInfo.answer_time,
@@ -252,6 +190,7 @@ Page({
                     answerNumber: res.data.data.sysInfo.answer_number,
                     now: bili(res.data.data.sysInfo.answer_time, res.data.data.sysInfo.end_time, res.data.data.sysInfo.answer_number).start_time
                 })
+                
                 
             }
             

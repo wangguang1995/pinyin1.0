@@ -12,7 +12,12 @@ page{
     box-sizing: border-box;
     background: #db5a3a;
 }
-
+.shareShow{
+    display: flex;
+}
+.shareHide{
+    display: none;
+}
 .userinfo {
     display: flex;
     flex-direction: column;
