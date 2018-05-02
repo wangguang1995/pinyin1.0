@@ -1,5 +1,3 @@
-/* pages/answer/answer.wxss */
-
 page {
     height: 100%;
     background: #1f1f1f;
@@ -17,6 +15,7 @@ page {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 10;
 }
 .answerZhezhao{
     height: 100rpx;
@@ -29,7 +28,7 @@ page {
     align-items: center;
     position: relative;
     top: 50%;
-    margin-top: -50rpx;
+    margin-top: -40rpx;
     left: 50%;
     margin-left: -30%;
 }

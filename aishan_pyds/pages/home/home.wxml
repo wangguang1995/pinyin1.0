@@ -19,7 +19,7 @@
         <view class="userinfo">
             <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
             <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-            <text class="userinfo-nickname">考试过关{{clearance_num}}次</text>
+            <text class="userinfo-nickname">待领取奖品{{canGet}}次</text>
         </view>
         <button class='customer' open-type='contact'>
             <image src='../../images/icon-home-kefu.png'></image>
@@ -42,7 +42,7 @@
                 <text>
             <text class='fontSize'>{{answer_number}}</text> 次
                 </text>
-                <text>以考试</text>
+                <text>已考试</text>
             </view>
             <view class='challenge'>
                 <text>
@@ -51,12 +51,12 @@
                 <text>最高记录</text>
             </view>
         </view>
-        <view class='info-btn'>
+        <view class="info-btn {{isflag?'shareHide':'shareShow'}}">
             <button open-type='share'>
-                <image src='../../images/index-icon-logo.png' class="index-logo {{isflag?'shareHide':'shareShow'}}"></image>
+                <image src='../../images/index-icon-logo.png' class="index-logo "></image>
                 炫耀战绩
             </button>
-            <button bindtap="indexShare {{isflag?'shareHide':'shareShow'}}">获得挑战机会</button>
+            <button bindtap="indexShare">获得挑战机会</button>
         </view>
     </view>
 </scroll-view>

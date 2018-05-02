@@ -17,8 +17,8 @@ Page({
         number: null,//答对多少道题
         share_group: null,//分享一次，获得多少次机会
         share: null,//每天分享群的次数
-        title:"",
-        tiale_2:""
+        title: "",
+        tiale_2: ""
     },
     display: function (e) {
         this.setData({
@@ -48,7 +48,7 @@ Page({
         console.log(surplus_number);
         if (openId == "" || openId == null) {
             app.getInfo();
-        } else if (surplus_number == 0){
+        } else if (surplus_number == 0) {
             wx.showModal({
                 title: '提示',
                 content: "您已经没有挑战机会了",
@@ -61,7 +61,7 @@ Page({
                     }
                 }
             })
-        }else{
+        } else {
             app.util.request({
                 'url': 'entry/wxapp/reduce',
                 data: {
@@ -87,7 +87,7 @@ Page({
      */
 
     onLoad: function (options) {
-
+        app.getInfo();
     },
 
     /**
@@ -106,7 +106,6 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        app.getInfo();
         var _this = this;
         app.util.request({
             url: 'entry/wxapp/SysInfo',
@@ -136,23 +135,24 @@ Page({
                     yili: res.data.data.yili,
                     num: res.data.data.sysInfo.challenge_time,
                     title: res.data.data.sysInfo.title,
-                    title_2:res.data.data.sysInfo.title_2,
+                    title_2: res.data.data.sysInfo.title_2,
                     wawa: res.data.data.prize,
                     number: res.data.data.sysInfo.answer_number,
                     share_group: res.data.data.sysInfo.share_group,
                     initial_number: res.data.data.sysInfo.initial_number
                 })
-                wx.setStorageSync('wawa', res.data.data.prize);
+                wx.setStorageSync('wawa', res.data.data.prize);//奖品列表
                 wx.setStorageSync('number', res.data.data.sysInfo.answer_number);
                 wx.setStorageSync('answer_time', res.data.data.sysInfo.answer_time);//开始时间
                 wx.setStorageSync('end_time', res.data.data.sysInfo.end_time);//结束时间
-                wx.setStorageSync('share_text', res.data.data.sysInfo.share_text);
+                wx.setStorageSync('share_text', res.data.data.sysInfo.share_text);//分享标题
                 wx.setStorageSync('share_number', res.data.data.sysInfo.share_number);
                 app.globalData.name = res.data.data.sysInfo.name;
+                //动态设置title标题
                 wx.setNavigationBarTitle({
                     title: res.data.data.sysInfo.name
                 })
-                
+
 
             }
         })
@@ -161,12 +161,26 @@ Page({
         })
 
     },
+    //预览图片
+    previewImage: function (e) {
+        var current = e.target.dataset.src;
+        console.log(e)
+        var imgList = [];
+        for (let i = 0; i < this.data.wawa.length; i++) {
+            imgList.push(this.data.wawa[i].img_url);
+        }
+        wx.previewImage({
+            current: current,
+            urls: imgList
+        })
+    },
     //分享
     onShareAppMessage: function (res) {
+        var share_text = wx.getStorageSync('share_text');
         let that = this
         return {
-            title: '加减大师',
-            path: '/aishang_jzds/pages/index/index',
+            title: share_text,
+            path: '/aishang_jzmaster/pages/index/index?url=',
             success: function (res) {
                 //getSystemInfo是为了获取当前设备信息，判断是android还是ios，如果是android
                 //还需要调用wx.getShareInfo()，只有当成功回调才是转发群，ios就只需判断shareTickets
@@ -181,7 +195,6 @@ Page({
                                 shareTicket: res.shareTickets,
                                 success: function (res) {
                                     console.log(res);
-                                    console.log(2);
                                     var openId = wx.getStorageSync('openId');
                                     var session3rd = wx.getStorageSync('session3rd');
                                     app.util.request({
@@ -195,7 +208,9 @@ Page({
                                         success: function (res) {
                                             console.log(res);
                                             var surplus_number = wx.getStorageSync('surplus_number');
-                                            // wx.setStorageSync('surplus_number', (parseInt(surplus_number) + this.data.share_group));
+                                            console.log(surplus_number);
+                                            console.log(res.data.data.share_group);
+                                            wx.setStorageSync('surplus_number', (parseInt(surplus_number) + parseInt(res.data.data.share_group)));
                                             wx.showModal({
                                                 title: '提示',
                                                 content: res.data.message,
@@ -228,39 +243,47 @@ Page({
                             })
                         }
                         if (d.platform == 'ios') {
+                            console.log(2);
                             if (res.shareTickets != undefined) {
                                 console.log("分享的是群");
-                                console.log(res.shareTickets);
-                                var openId = wx.getStorageSync('openId');
-                                var session3rd = wx.getStorageSync('session3rd');
-                                app.util.request({
-                                    url: 'entry/wxapp/Increase',
-                                    data: {
-                                        openId: openId,
-                                        session3rd: session3rd,
-                                        iv: res.iv,
-                                        encryptedData: res.encryptedData
-                                    },
+                                console.log(res);
+                                wx.getShareInfo({
+                                    shareTicket: res.shareTickets,
                                     success: function (res) {
-                                        console.log(res);
-                                        var surplus_number = wx.getStorageSync('surplus_number');
-                                        // wx.setStorageSync('surplus_number', (parseInt(surplus_number) + 2));
-                                        wx.showModal({
-                                            title: '提示',
-                                            content: res.data.message,
-                                            showCancel: false,
+                                        var openId = wx.getStorageSync('openId');
+                                        var session3rd = wx.getStorageSync('session3rd');
+                                        app.util.request({
+                                            url: 'entry/wxapp/Increase',
+                                            data: {
+                                                openId: openId,
+                                                session3rd: session3rd,
+                                                iv: res.iv,
+                                                encryptedData: res.encryptedData
+                                            },
                                             success: function (res) {
-                                                if (res.confirm) {
-                                                    console.log('用户点击确定')
-                                                } else if (res.cancel) {
-                                                    console.log('用户点击取消')
-                                                }
+                                                console.log(res);
+                                                var surplus_number = wx.getStorageSync('surplus_number');
+                                                wx.setStorageSync('surplus_number', (parseInt(surplus_number) + parseInt(res.data.data.share_group)));
+                                                wx.showModal({
+                                                    title: '提示',
+                                                    content: res.data.message,
+                                                    showCancel: false,
+                                                    success: function (res) {
+                                                        if (res.confirm) {
+                                                            console.log('用户点击确定')
+                                                        } else if (res.cancel) {
+                                                            console.log('用户点击取消')
+                                                        }
+                                                    }
+                                                })
+
                                             }
                                         })
-
                                     }
                                 })
+
                             } else {
+                                console.log(res);
                                 console.log("分享的是个人");
                                 wx.showModal({
                                     title: '提示',
@@ -278,16 +301,11 @@ Page({
 
                     },
                     fail: function (res) {
-                        wx.showToast({
-                            title: "转发失败",
-                            duration: 2000
-                        });
+
                     }
                 })
-            },
-            fail: function (res) {
-                // 转发失败
             }
+
         }
     },
     /**

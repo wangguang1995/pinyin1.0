@@ -3,7 +3,7 @@ page{
     width: 100%; 
 }
 .doll_top{
-    background: #7c479f;
+    background: #db5a3a;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -11,7 +11,7 @@ page{
     align-items: center;
 }
 .doll_top text{
-    color:#d4b0d0;
+    color:#cb543e;
     display: block;
     height: 50rpx;
     width: 30%;
@@ -30,7 +30,7 @@ page{
 .doll_bot{
     width: 100%;
     height: 90%;
-    background: #f8e1da;
+    background: #fee7b1;
 }
 .doll_bot .aa{
     height: 100%;

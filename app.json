@@ -1,11 +1,11 @@
 {
     "pages": [
-        "aishan_pydr/pages/index/index",
-        "aishan_pydr/pages/home/home",
-        "aishan_pydr/pages/answer/answer",
-        "aishan_pydr/pages/address/address",
-        "aishan_pydr/pages/transfer/transfer",
-        "aishan_pydr/pages/doll/doll"
+        "aishan_pyds/pages/index/index",
+        "aishan_pyds/pages/home/home",
+        "aishan_pyds/pages/answer/answer",
+        "aishan_pyds/pages/address/address",
+        "aishan_pyds/pages/transfer/transfer",
+        "aishan_pyds/pages/doll/doll"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -16,16 +16,16 @@
         "backgroundColor": "#d6b872",
         "list": [
             {
-                "pagePath": "aishan_pydr/pages/index/index",
+                "pagePath": "aishan_pyds/pages/index/index",
                 "text": "我要挑战",
-                "iconPath": "aishan_pydr/images/icon-index.png",
-                "selectedIconPath": "aishan_pydr/images/icon-index2.png"
+                "iconPath": "aishan_pyds/images/icon-index.png",
+                "selectedIconPath": "aishan_pyds/images/icon-index2.png"
             },
             {
-                "pagePath": "aishan_pydr/pages/home/home",
+                "pagePath": "aishan_pyds/pages/home/home",
                 "text": "个人中心",
-                "iconPath": "aishan_pydr/images/icon-info.png",
-                "selectedIconPath": "aishan_pydr/images/icon-info2.png"
+                "iconPath": "aishan_pyds/images/icon-info.png",     
+                "selectedIconPath": "aishan_pyds/images/icon-info2.png"
             }
         ]
     }

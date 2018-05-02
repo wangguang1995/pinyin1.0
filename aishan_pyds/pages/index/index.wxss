@@ -19,7 +19,7 @@ page{
     display: flex;
 }
 .shareHide{
-    display: none;
+    display: none!important;
 }
 .hide {
     display: none;

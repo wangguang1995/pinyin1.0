@@ -77,14 +77,14 @@
             <view class="right-item item3 {{tabArr.curBdIndex=='2'? 'active2' : ''}}">
                 <view class='prize'>
                     <text class='text'>
-                        挑战成功领取娃娃
+                        挑战成功领取奖品
                     </text>
                     <text class='receive' catchtap='jinru'>立即领取</text>
                 </view>
                 <view class='contentbot'>
                     <view class='contentWa' wx:for='{{wawa}}'>
 
-                        <image src='{{item.img_url}}'></image>
+                        <image src='{{item.img_url}}' data-src='{{item.img_url}}' bindtap='previewImage'></image>
                         <text class='waName'>{{item.name}}</text>
                     </view>
                 </view>

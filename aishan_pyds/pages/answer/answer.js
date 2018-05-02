@@ -67,10 +67,6 @@ Page({
     },
     //点击事件
     selectAnswer:function(e){
-        var time = new Date().getTime();
-        this.setData({
-            time: time
-        })
         var startTime = this.data.startTime;//开始时间
         var endTime = this.data.endTime;//结束时间
         var answerNumber = this.data.answerNumber;//答对多少提
@@ -125,7 +121,12 @@ Page({
             })    
         }else{
             if (value == isJson[num].right_py) {
+                var time = new Date().getTime();
+                this.setData({
+                    time: time
+                })
                 console.log('答对了')
+                console.log('答题递减时间：'+this.data.now)
                 clearInterval(timer);
                 num++;
                 id++;
@@ -184,26 +185,17 @@ Page({
                     wordIsTrue: false
                 }
                 _this.setData({
-                    isJson:res.data.data.question,
-                    startTime: res.data.data.sysInfo.answer_time,
-                    endTime: res.data.data.sysInfo.end_time,
-                    answerNumber: res.data.data.sysInfo.answer_number,
+                    isJson:res.data.data.question,//题库
+                    startTime: res.data.data.sysInfo.answer_time,//开始时间
+                    endTime: res.data.data.sysInfo.end_time,//结束时间
+                    answerNumber: res.data.data.sysInfo.answer_number,//题目数
                     now: bili(res.data.data.sysInfo.answer_time, res.data.data.sysInfo.end_time, res.data.data.sysInfo.answer_number).start_time
                 })
                 
                 
             }
             
-        })
-        
-        
-        
-
-    },
-    start: function (e) {
-        
-        clearInterval(timer);
-        this.progress();
+        })   
     },
     /**
    * 生命周期函数--监听页面隐藏

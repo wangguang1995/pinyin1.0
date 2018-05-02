@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
 Page({
     data: {
         userInfo: {},
@@ -11,17 +10,12 @@ Page({
         clearance_number:"",//通关次数
         record:"",//最高分
         Clearance_num:0,
-        isflag:null
-
+        isflag:null,
+        canGet:""
     },
 
     onLoad: function () {
-        app.getInfo();
-        if (app.globalData.userInfo != null) {
-            this.setData({
-                userInfo: app.globalData.userInfo
-            })
-        }
+        
         wx.setNavigationBarTitle({
             title: app.globalData.name
         })
@@ -40,27 +34,25 @@ Page({
     },
     //分享
     onShareAppMessage: function (res) {
+        var share_text = wx.getStorageSync('share_text');
         let that = this
-        that.setData({
-            isTrue: false
-        })
         return {
-            title: '加减大师',
-            path: '/aishang_jzds/pages/index/index',
+            title: share_text,
+            path: '/aishang_jzmaster/pages/index/index?url=',
             success: function (res) {
                 //getSystemInfo是为了获取当前设备信息，判断是android还是ios，如果是android
                 //还需要调用wx.getShareInfo()，只有当成功回调才是转发群，ios就只需判断shareTickets
-
+                //获取用户设备信息
                 wx.getSystemInfo({
                     success: function (d) {
                         console.log(d);
+                        //判断用户手机是IOS还是Android
                         if (d.platform == 'android') {
                             console.log(1)
                             wx.getShareInfo({
                                 shareTicket: res.shareTickets,
                                 success: function (res) {
                                     console.log(res);
-                                    console.log(2);
                                     var openId = wx.getStorageSync('openId');
                                     var session3rd = wx.getStorageSync('session3rd');
                                     app.util.request({
@@ -74,19 +66,18 @@ Page({
                                         success: function (res) {
                                             console.log(res);
                                             var surplus_number = wx.getStorageSync('surplus_number');
+                                            console.log(surplus_number);
+                                            console.log(res.data.data.share_group);
+                                            wx.setStorageSync('surplus_number', (parseInt(surplus_number) + parseInt(res.data.data.share_group)));
                                             wx.showModal({
                                                 title: '提示',
                                                 content: res.data.message,
                                                 showCancel: false,
                                                 success: function (res) {
                                                     if (res.confirm) {
-                                                        wx.switchTab({
-                                                            url: '../index/index'
-                                                        })
+                                                        console.log('用户点击确定')
                                                     } else if (res.cancel) {
-                                                        wx.switchTab({
-                                                            url: '../index/index'
-                                                        })
+                                                        console.log('用户点击取消')
                                                     }
                                                 }
                                             })
@@ -110,43 +101,47 @@ Page({
                             })
                         }
                         if (d.platform == 'ios') {
+                            console.log(2);
                             if (res.shareTickets != undefined) {
                                 console.log("分享的是群");
-                                console.log(res.shareTickets);
-                                var openId = wx.getStorageSync('openId');
-                                var session3rd = wx.getStorageSync('session3rd');
-                                app.util.request({
-                                    url: 'entry/wxapp/Increase',
-                                    data: {
-                                        openId: openId,
-                                        session3rd: session3rd,
-                                        iv: res.iv,
-                                        encryptedData: res.encryptedData
-                                    },
+                                console.log(res);
+                                wx.getShareInfo({
+                                    shareTicket: res.shareTickets,
                                     success: function (res) {
-                                        console.log(res);
-                                        var surplus_number = wx.getStorageSync('surplus_number');
-                                        // wx.setStorageSync('surplus_number', (parseInt(surplus_number) + 2));
-                                        wx.showModal({
-                                            title: '提示',
-                                            content: res.data.message,
-                                            showCancel: false,
+                                        var openId = wx.getStorageSync('openId');
+                                        var session3rd = wx.getStorageSync('session3rd');
+                                        app.util.request({
+                                            url: 'entry/wxapp/Increase',
+                                            data: {
+                                                openId: openId,
+                                                session3rd: session3rd,
+                                                iv: res.iv,
+                                                encryptedData: res.encryptedData
+                                            },
                                             success: function (res) {
-                                                if (res.confirm) {
-                                                    wx.switchTab({
-                                                        url: '../index/index'
-                                                    })
-                                                } else if (res.cancel) {
-                                                    wx.switchTab({
-                                                        url: '../index/index'
-                                                    })
-                                                }
+                                                console.log(res);
+                                                var surplus_number = wx.getStorageSync('surplus_number');
+                                                wx.setStorageSync('surplus_number', (parseInt(surplus_number) + parseInt(res.data.data.share_group)));
+                                                wx.showModal({
+                                                    title: '提示',
+                                                    content: res.data.message,
+                                                    showCancel: false,
+                                                    success: function (res) {
+                                                        if (res.confirm) {
+                                                            console.log('用户点击确定')
+                                                        } else if (res.cancel) {
+                                                            console.log('用户点击取消')
+                                                        }
+                                                    }
+                                                })
+
                                             }
                                         })
-
                                     }
                                 })
+
                             } else {
+                                console.log(res);
                                 console.log("分享的是个人");
                                 wx.showModal({
                                     title: '提示',
@@ -164,23 +159,26 @@ Page({
 
                     },
                     fail: function (res) {
-                        wx.showToast({
-                            title: "转发失败",
-                            duration: 2000
-                        });
+
                     }
                 })
-            },
-            fail: function (res) {
-                // 转发失败
             }
+
         }
     },
     onShow: function () {
+        app.getInfo();
+        //获得用户权限
+        if (app.globalData.userInfo != null) {
+            this.setData({
+                userInfo: app.globalData.userInfo
+            })
+        }
+        //分享获得ShareTicket
         wx.showShareMenu({
             withShareTicket: true
         })
-
+        //可分享的次数
         var share_number = wx.getStorageSync('share_number');
         if (share_number == 0) {
             this.setData({
@@ -194,8 +192,8 @@ Page({
         var _this = this;
         
         var answer_number = wx.getStorageSync('answer_number');
-        var clearance_number = wx.getStorageSync('clearance_number');
-        var surplue_number = wx.getStorageSync('surplus_number');
+        var clearance_number = wx.getStorageSync('clearance_number');//可领取奖品数量
+        var surplue_number = wx.getStorageSync('surplus_number');//可挑战次数
         var prize_number = wx.getStorageSync('prize_number');
         var record = wx.getStorageSync('record');
         var canGet = wx.getStorageSync('canGet');

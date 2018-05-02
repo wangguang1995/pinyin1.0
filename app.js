@@ -1,7 +1,6 @@
 //app.js
 import util from './we7/resource/js/util.js';
 import s from './siteinfo.js';
-
 App({
     getInfo:function(){
         var _this = this;
@@ -18,7 +17,7 @@ App({
                                     code: code,
                                     encryptedData: res.encryptedData,
                                     iv: res.iv,
-                                    m:s.name
+                                    m:"aishan_pyds"
                                 }, 
                                 success:function(res){
                                     console.log(res);
@@ -67,7 +66,6 @@ App({
                                             wx.getUserInfo({
                                                 success:res =>{
                                                     console.log(res);
-                                                    var userInfo = res.userInfo;
                                                     _this.globalData.userInfo = res.userInfo;
                                                     
                                                 }
